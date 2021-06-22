@@ -1,7 +1,8 @@
 PIPEX = pipex
-LIB = libft/libft.a
+LIB = 	libft/libft.a
 
-SRCS = 	srcs/main.c
+SRCS = 	srcs/main.c\
+		srcs/utils.c
 
 OBJS = $(SRCS:.c=.o)
 INCLUDES += -I libft/libft
