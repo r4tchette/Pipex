@@ -7,6 +7,7 @@ SRC =	libft/ft_bzero.c\
 		libft/ft_strlcat.c\
 		libft/ft_strlcpy.c\
 		libft/ft_strlen.c\
+		libft/ft_strncmp.c\
 		libft/ft_utoa.c\
 		libft/ft_xtoa.c\
 		libft/ft_ptoa.c\
