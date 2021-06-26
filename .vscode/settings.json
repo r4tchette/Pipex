@@ -1,6 +1,14 @@
 {
     "files.associations": {
         "__config": "cpp",
-        "locale": "cpp"
+        "locale": "cpp",
+        "pipex.h": "c",
+        "wait.h": "c",
+        "limits.h": "c",
+        "libft.h": "c",
+        "fcntl.h": "c",
+        "stdlib.h": "c",
+        "unistd.h": "c",
+        "complex": "c"
     }
 }
