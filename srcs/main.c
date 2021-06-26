@@ -18,13 +18,14 @@ static int	execute_program(char *arg, char **envp)
 	return (0);
 }
 
-static int	loop_pipe(int fd[2], char **argv, char **envp)
+static int	loop(int fd[2], char **argv, char **envp)
 {
 	int		p[2];
 	pid_t	pid;
 
 	while (*(++argv + 1) != NULL)
 	{
+		printf("run <%s>\n", *argv);
 		pipe(p);
 		p[1] = (*(argv + 2) == NULL) ? fd[1] : p[1];
 		if ((pid = fork()) == -1)
@@ -47,26 +48,52 @@ static int	loop_pipe(int fd[2], char **argv, char **envp)
 	return (0);
 }
 
+int			heredoc(const char *tempfile, const char *limiter)
+{
+	int		fd;
+	char	*buf;
+
+	if (0 > (fd = open(tempfile, O_CREAT | O_RDWR | O_TRUNC, 0644)))
+		return (-1);
+	ft_printf("> ");
+	while (get_next_line(0, &buf) != 0)
+	{
+		if (ft_strncmp(buf, limiter, ft_strlen(limiter)) == 0)
+			break ;
+		ft_printf("> ");
+		write(fd, buf, ft_strlen(buf));
+		write(fd, "\n", 1);
+		free(buf);
+	}
+	free(buf);
+	close (fd);
+	return (1);
+}
+
 int			main(int argc, char *argv[], char *envp[])
 {
-	int	fd[2];
+	int		fd[2];
 
 	if (argc < 4)
 	{
 		ft_printf("usage: pipex file1 cmd1 cmd2 cmd3 ... cmdn file2");
 		return (-1);
 	}
-	if (0 > (fd[0] = open(argv[1], O_RDONLY)))
+	if (!ft_strncmp(argv[1], "heredoc", 7))
 	{
-		perror(argv[1]);
-		return (-1);
+		heredoc("./temp", argv[2]);
+		fd[0] = open("./temp", O_RDONLY);
+		fd[1] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
-	if (0 > (fd[1] = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT, 0644)))
+	else
 	{
-		close(fd[0]);
-		perror(argv[argc - 1]);
-		return (-1);
+		fd[0] = open(argv[1], O_RDONLY);
+		fd[1] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
-	loop_pipe(fd, argv + 1, envp);
+	loop(fd, argv + 1 + (!(ft_strncmp(argv[1], "heredoc", 7)) ? 1 : 0), envp);
+	(!ft_strncmp(argv[1], "heredoc", 7)) ? execute_program("rm -f ./temp", envp) : 0;
+	close(fd[0]);
+	close(fd[1]);
+	while (1);
 	return (0);
 }
