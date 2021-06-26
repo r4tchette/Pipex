@@ -6,7 +6,7 @@
 /*   By: yeonkim <yeonkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:11:22 by yeonkim           #+#    #+#             */
-/*   Updated: 2021/06/26 20:02:50 by yeonkim          ###   ########.fr       */
+/*   Updated: 2021/06/26 20:05:10 by yeonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <limits.h>
+# include <stdio.h>
 # include "libft.h"
 
 typedef struct	s_program

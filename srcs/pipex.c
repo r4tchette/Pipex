@@ -6,7 +6,7 @@
 /*   By: yeonkim <yeonkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:11:15 by yeonkim           #+#    #+#             */
-/*   Updated: 2021/06/26 19:48:28 by yeonkim          ###   ########.fr       */
+/*   Updated: 2021/06/26 20:10:45 by yeonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	heredoc(const char *tempfile, const char *limiter)
 	char	*buf;
 
 	if (0 > (fd = open(tempfile, O_CREAT | O_RDWR | O_TRUNC, 0644)))
+	{
+		perror(tempfile);
 		return (-1);
+	}
 	ft_printf("> ");
 	while (get_next_line(0, &buf) != 0)
 	{
@@ -110,10 +113,15 @@ int	open_fd(int argc, char *argv[], int *fd)
 	}
 	else
 	{
-		fd[0] = open(argv[1], O_RDONLY);
+		if ((fd[0] = open(argv[1], O_RDONLY)) < 0)
+		{
+			perror(argv[1]);
+		}
 		fd[1] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
 	if (fd[0] == -1 || fd[1] == -1)
+	{
 		return (-1);
+	}
 	return (1);
 }
