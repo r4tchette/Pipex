@@ -90,10 +90,11 @@ int			main(int argc, char *argv[], char *envp[])
 		fd[0] = open(argv[1], O_RDONLY);
 		fd[1] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
+	if (fd[0] == -1 || fd[1] == -1)
+		return (-1);
 	loop(fd, argv + 1 + (!(ft_strncmp(argv[1], "heredoc", 7)) ? 1 : 0), envp);
 	(!ft_strncmp(argv[1], "heredoc", 7)) ? execute_program("rm -f ./temp", envp) : 0;
 	close(fd[0]);
 	close(fd[1]);
-	while (1);
 	return (0);
 }
