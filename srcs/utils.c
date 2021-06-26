@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yeonkim <yeonkim@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/26 19:11:20 by yeonkim           #+#    #+#             */
+/*   Updated: 2021/06/26 19:11:20 by yeonkim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 int			path_size(char **path)
@@ -10,7 +22,7 @@ int			path_size(char **path)
 	return (i);
 }
 
-char    	**get_path(char *envp[])
+char		**get_path(char *envp[])
 {
 	char	*path;
 	int		i;
@@ -22,17 +34,17 @@ char    	**get_path(char *envp[])
 	return (ft_split(path, ':'));
 }
 
-int         free_path(char **path)
+int			free_path(char **path)
 {
-    int i;
+	int i;
 
-    if (!path)
-        return (-1);
-    i = -1;
-    if (path[++i])
-        free(path[i]);
-    free(path);
-    return (0);
+	if (!path)
+		return (-1);
+	i = -1;
+	if (path[++i])
+		free(path[i]);
+	free(path);
+	return (0);
 }
 
 t_program	*parse_program(char *argv, char **path)
@@ -51,7 +63,7 @@ t_program	*parse_program(char *argv, char **path)
 	return (prgm);
 }
 
-int	    	free_program(t_program *prgm)
+int			free_program(t_program *prgm)
 {
 	int	i;
 
